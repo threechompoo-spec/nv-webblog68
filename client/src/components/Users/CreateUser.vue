@@ -1,0 +1,62 @@
+<template>
+  <div>
+    <h1>Create User</h1>
+
+    <form @submit.prevent="createUser">
+      <p>
+        name:
+        <input type="text" v-model="user.name">
+      </p>
+
+      <p>
+        lastname:
+        <input type="text" v-model="user.lastname">
+      </p>
+
+      <p>
+        email:
+        <input type="text" v-model="user.email">
+      </p>
+
+      <p>
+        password:
+        <input type="text" v-model="user.password">
+      </p>
+
+      <p>
+        <button type="submit">create user</button>
+      </p>
+    </form>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  data () {
+    return {
+      user: {
+        name: '',
+        lastname: '',
+        email: '',
+        password: '',
+        status: 'active'
+      }
+    }
+  },
+  methods: {
+    async createUser () {
+      try {
+        await axios.post('http://localhost:8081/user', this.user)
+        this.$router.push('/users')
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+</style>
