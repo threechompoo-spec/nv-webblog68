@@ -1,76 +1,44 @@
 <template>
-  <div>
+ <div>
     <h1>Edit User</h1>
-
-    <form @submit.prevent="editUser">
-      <p>
-        name:
-        <input type="text" v-model="user.name" required>
-      </p>
-
-      <p>
-        lastname:
-        <input type="text" v-model="user.lastname" required>
-      </p>
-
-      <p>
-        email:
-        <input type="email" v-model="user.email" required>
-      </p>
-
-      <p>
-        password:
-        <input type="text" v-model="user.password" required>
-      </p>
-
-      <p>
-        <button type="submit">อัปเดต</button>
-        <button type="button" @click="goBack">ยกเลิก</button>
-      </p>
+    <form v-on:submit.prevent = "editUser">
+        <p>name: <input type="text" v-model="user.name"></p>
+        <p>lastname: <input type="text" v-model="user.lastname"></p>
+        <p>email: <input type="text" v-model="user.email"></p>
+        <p>password: {{this.user.password}}</p>
+        <p><button type="submit">edit user</button></p>
     </form>
-  </div>
+    </div>
+
 </template>
 
 <script>
-import axios from 'axios'
-
+import UsersService from '../../services/UsersService';
 export default {
-  data () {
-    return {
-      user: {
-        id: null,
-        name: '',
-        lastname: '',
-        email: '',
-        password: '',
-        status: 'active'
-      }
+  data(){
+    return{
+      user: null
     }
   },
-  async created () {
-    try {
-      let userId = this.$route.params.userId
-      const response = await axios.get('http://localhost:8081/user/' + userId)
-      this.user = response.data
-    } catch (error) {
-      console.log(error)
+  methods:{
+    async editUser(){
+      await UsersService.put(this.user)
+      this.$router.push({
+                    name: 'users'
+                })
     }
   },
-  methods: {
-    async editUser () {
-      try {
-        await axios.put('http://localhost:8081/user/' + this.user.id, this.user)
-        this.$router.push('/users')
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    goBack () {
-      this.$router.push('/users')
+  async created(){
+    try{
+      this.user = (await UsersService.show(this.$route.params.userId)).data
+      console.log('edit user: '+ this.user)
+    }catch{
+      console.log('error')
     }
   }
 }
 </script>
 
 <style scoped>
+/* CSS เฉพาะหน้านี้ */
 </style>

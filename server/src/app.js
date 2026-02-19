@@ -4,19 +4,17 @@ const { sequelize } = require('./models')
 const config = require('./config/config')
 
 const app = express()
-
-// ===== Middleware Section =====
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cors()) // ← ใส่ CORS ตรงนี้
+app.use(cors())
+// กำหนดให้ folder 'public' เป็น static resource ที่เข้าถึงได้ผ่าน path '/assets'
 app.use('/assets', express.static('public'))
 
 require('./userPassport')
-
-// ===== Routes Section =====
+// --- Routes Section ---
 require('./routes')(app)
 
-// ===== Server Startup Section =====
+// --- Server Startup Section ---
 const port = config.port
 
 sequelize.sync({ force: false })

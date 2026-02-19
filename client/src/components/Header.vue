@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div >
     <div class="nv-navbar">
       <ul class="nav">
-      <li><router-link :to="{name: 'blogs'}">Blogs</router-link></li> [cite: 13, 19]
-      <li><router-link :to="{name: 'users'}">Users</router-link></li> [cite: 20, 31]
-      <li><router-link :to="{name: 'login'}">Login</router-link></li> [cite: 20]
-     </ul>
+        <li><router-link :to="{name: 'blogs'}">Blogs</router-link></li>
+        <li><router-link :to="{name: 'users'}">Users</router-link></li>
+        <li><router-link :to="{name: 'login'}">Login</router-link></li>
+      </ul>
       <div class="clearfix"></div>
     </div>
   </div>

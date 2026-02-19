@@ -1,8 +1,24 @@
 import { createApp } from 'vue'
-import './style.css'
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
 import App from './App.vue'
 import router from './router'
+import BackHeader from './components/Header.vue'
+import { CkeditorPlugin } from '@ckeditor/ckeditor5-vue' // [เพิ่ม] Import CKEditor Plugin
 
-const app = createApp(App) // สร้าง App
-app.use(router) // ใช้งาน Router
-app.mount('#app') // แปะลงไปที่ id="app" ใน index.html
+const app = createApp(App)
+const pinia = createPinia()
+
+pinia.use(piniaPluginPersistedstate) // ใช้ Plugin
+
+// แก้ตรงบรรทัดนี้ค่ะ ลบ () ออก
+app.use(pinia) 
+
+app.use(CkeditorPlugin) // [เพิ่ม] เปิดใช้งาน CKEditor ผ่าน app instance [cite: 27]
+
+app.use(router)
+
+app.component('back-header', BackHeader)
+
+app.mount('#app')

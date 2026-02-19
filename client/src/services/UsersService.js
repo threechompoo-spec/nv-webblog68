@@ -1,7 +1,7 @@
-import Api from '@/services/Api'
+import Api from './Api'
 
 export default {
-    index (search) {
+    index () {
         return Api().get('users')
     },
     show (userId) {
